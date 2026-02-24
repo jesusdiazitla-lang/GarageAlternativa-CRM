@@ -9,19 +9,14 @@ const app = express();
 
 // ===== MIDDLEWARE =====
 
-// CORS - Permitir peticiones desde el frontend
 app.use(cors({
   origin: process.env.FRONTEND_URL || 'http://localhost:5173',
   credentials: true
 }));
 
-// Parse JSON bodies
 app.use(express.json());
-
-// Parse URL-encoded bodies
 app.use(express.urlencoded({ extended: true }));
 
-// Logging de peticiones (solo en desarrollo)
 if (process.env.NODE_ENV === 'development') {
   app.use((req, res, next) => {
     console.log(`${req.method} ${req.path}`);
@@ -31,26 +26,32 @@ if (process.env.NODE_ENV === 'development') {
 
 // ===== RUTAS =====
 
-// Ruta de health check
 app.get('/', (req, res) => {
   res.json({
     success: true,
     message: 'API Garage Alternativo - Funcionando correctamente',
     version: '1.0.0',
-    timestamp: new Date().toISOString()
+    timestamp: new Date().toISOString(),
+    endpoints: {
+      auth:           '/api/auth',
+      clientes:       '/api/clientes',
+      vehiculos:      '/api/vehiculos',
+      mantenimientos: '/api/mantenimientos',
+      programaciones: '/api/programaciones',
+      alertas:        '/api/alertas'
+    }
   });
 });
 
-// Rutas de la API
-const authRoutes = require('./routes/auth.routes');
-const clienteRoutes = require('./routes/cliente.routes');
-
-app.use('/api/auth', authRoutes);
-app.use('/api/clientes', clienteRoutes);
+app.use('/api/auth',           require('./routes/auth.routes'));
+app.use('/api/clientes',       require('./routes/cliente.routes'));
+app.use('/api/vehiculos',      require('./routes/vehiculo.routes'));
+app.use('/api/mantenimientos', require('./routes/mantenimiento.routes'));
+app.use('/api/programaciones', require('./routes/programacion.routes'));
+app.use('/api/alertas',        require('./routes/alerta.routes'));
 
 // ===== MANEJO DE ERRORES =====
 
-// Ruta no encontrada
 app.use((req, res) => {
   res.status(404).json({
     success: false,
@@ -59,10 +60,8 @@ app.use((req, res) => {
   });
 });
 
-// Manejo de errores global
 app.use((err, req, res, next) => {
   console.error('❌ Error:', err);
-  
   res.status(err.status || 500).json({
     success: false,
     message: err.message || 'Error interno del servidor',
