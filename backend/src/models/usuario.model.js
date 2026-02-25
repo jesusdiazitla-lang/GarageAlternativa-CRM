@@ -8,7 +8,7 @@ const UsuarioModel = {
 
   findByEmail: async (email) => {
     const results = await db.query(
-      'SELECT * FROM usuarios WHERE email = ? AND activo = TRUE',
+      'SELECT id_usuario, nombre, email, password_hash, rol, activo FROM usuarios WHERE email = ? AND activo = TRUE',
       [email]
     );
     return results[0] || null;
@@ -22,10 +22,10 @@ const UsuarioModel = {
     return results[0] || null;
   },
 
-  create: async ({ nombre, email, contraseña, rol = 'admin' }) => {
+  create: async ({ nombre, email, password_hash, rol = 'admin' }) => {
     const result = await db.query(
-      'INSERT INTO usuarios (nombre, email, contraseña, rol) VALUES (?, ?, ?, ?)',
-      [nombre, email, contraseña, rol]
+      'INSERT INTO usuarios (nombre, email, password_hash, rol) VALUES (?, ?, ?, ?)',
+      [nombre, email, password_hash, rol]
     );
     return result.insertId;
   },

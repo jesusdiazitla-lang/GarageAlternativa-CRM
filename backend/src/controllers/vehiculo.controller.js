@@ -36,12 +36,12 @@ const VehiculoController = {
 
   create: async (req, res) => {
     try {
-      const { marca, modelo, año, placa, kilometraje_actual, id_cliente } = req.body;
+      const { marca, modelo, anio, placa, kilometraje_actual, id_cliente } = req.body;
 
-      if (!marca || !modelo || !año || !placa || !id_cliente) {
+      if (!marca || !modelo || !anio || !placa || !id_cliente) {
         return res.status(400).json({
           success: false,
-          message: 'Marca, modelo, año, placa e id_cliente son requeridos.'
+          message: 'Marca, modelo, anio, placa e id_cliente son requeridos.'
         });
       }
 
@@ -60,7 +60,7 @@ const VehiculoController = {
         });
       }
 
-      const id = await VehiculoModel.create({ marca, modelo, año, placa, kilometraje_actual, id_cliente });
+      const id = await VehiculoModel.create({ marca, modelo, anio, placa, kilometraje_actual, id_cliente });
       const vehiculo = await VehiculoModel.getById(id);
 
       res.status(201).json({
@@ -76,12 +76,12 @@ const VehiculoController = {
 
   update: async (req, res) => {
     try {
-      const { marca, modelo, año, placa, kilometraje_actual } = req.body;
+      const { marca, modelo, anio, placa, kilometraje_actual } = req.body;
 
-      if (!marca || !modelo || !año || !placa) {
+      if (!marca || !modelo || !anio || !placa) {
         return res.status(400).json({
           success: false,
-          message: 'Marca, modelo, año y placa son requeridos.'
+          message: 'Marca, modelo, anio y placa son requeridos.'
         });
       }
 
@@ -94,7 +94,7 @@ const VehiculoController = {
         });
       }
 
-      const actualizado = await VehiculoModel.update(req.params.id, { marca, modelo, año, placa, kilometraje_actual });
+      const actualizado = await VehiculoModel.update(req.params.id, { marca, modelo, anio, placa, kilometraje_actual });
       if (!actualizado) {
         return res.status(404).json({ success: false, message: 'Vehículo no encontrado.' });
       }

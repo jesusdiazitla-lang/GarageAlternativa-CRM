@@ -10,9 +10,9 @@ const AuthController = {
 
   login: async (req, res) => {
     try {
-      const { email, contraseña } = req.body;
+      const { email, contrasena } = req.body;
 
-      if (!email || !contraseña) {
+      if (!email || !contrasena) {
         return res.status(400).json({
           success: false,
           message: 'Email y contraseña son requeridos.'
@@ -27,7 +27,7 @@ const AuthController = {
         });
       }
 
-      const passwordValida = await bcrypt.compare(contraseña, usuario.contraseña);
+      const passwordValida = await bcrypt.compare(contrasena, usuario.password_hash);
       if (!passwordValida) {
         return res.status(401).json({
           success: false,
@@ -63,9 +63,9 @@ const AuthController = {
 
   register: async (req, res) => {
     try {
-      const { nombre, email, contraseña, rol } = req.body;
+      const { nombre, email, contrasena, rol } = req.body;
 
-      if (!nombre || !email || !contraseña) {
+      if (!nombre || !email || !contrasena) {
         return res.status(400).json({
           success: false,
           message: 'Nombre, email y contraseña son requeridos.'
@@ -80,8 +80,8 @@ const AuthController = {
         });
       }
 
-      const hash = await bcrypt.hash(contraseña, 10);
-      const id = await UsuarioModel.create({ nombre, email, contraseña: hash, rol });
+      const hash = await bcrypt.hash(contrasena, 10);
+      const id = await UsuarioModel.create({ nombre, email, password_hash: hash, rol });
 
       res.status(201).json({
         success: true,

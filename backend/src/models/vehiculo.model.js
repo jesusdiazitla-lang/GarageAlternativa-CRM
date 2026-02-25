@@ -8,7 +8,7 @@ const VehiculoModel = {
 
   getAll: async () => {
     return db.query(
-      `SELECT v.id_vehiculo, v.marca, v.modelo, v.año, v.placa,
+      `SELECT v.id_vehiculo, v.marca, v.modelo, v.anio, v.placa,
               v.kilometraje_actual, v.activo,
               c.id_cliente, c.nombre AS nombre_cliente, c.telefono AS telefono_cliente
        FROM vehiculos v
@@ -31,10 +31,10 @@ const VehiculoModel = {
 
   getByCliente: async (id_cliente) => {
     return db.query(
-      `SELECT id_vehiculo, marca, modelo, año, placa, kilometraje_actual
+      `SELECT id_vehiculo, marca, modelo, anio, placa, kilometraje_actual
        FROM vehiculos
        WHERE id_cliente = ? AND activo = TRUE
-       ORDER BY año DESC`,
+       ORDER BY anio DESC`,
       [id_cliente]
     );
   },
@@ -47,21 +47,21 @@ const VehiculoModel = {
     return results[0] || null;
   },
 
-  create: async ({ marca, modelo, año, placa, kilometraje_actual, id_cliente }) => {
+  create: async ({ marca, modelo, anio, placa, kilometraje_actual, id_cliente }) => {
     const result = await db.query(
-      `INSERT INTO vehiculos (marca, modelo, año, placa, kilometraje_actual, id_cliente)
+      `INSERT INTO vehiculos (marca, modelo, anio, placa, kilometraje_actual, id_cliente)
        VALUES (?, ?, ?, ?, ?, ?)`,
-      [marca, modelo, año, placa.toUpperCase(), kilometraje_actual || 0, id_cliente]
+      [marca, modelo, anio, placa.toUpperCase(), kilometraje_actual || 0, id_cliente]
     );
     return result.insertId;
   },
 
-  update: async (id, { marca, modelo, año, placa, kilometraje_actual }) => {
+  update: async (id, { marca, modelo, anio, placa, kilometraje_actual }) => {
     const result = await db.query(
       `UPDATE vehiculos
-       SET marca = ?, modelo = ?, año = ?, placa = ?, kilometraje_actual = ?
+       SET marca = ?, modelo = ?, anio = ?, placa = ?, kilometraje_actual = ?
        WHERE id_vehiculo = ? AND activo = TRUE`,
-      [marca, modelo, año, placa.toUpperCase(), kilometraje_actual, id]
+      [marca, modelo, anio, placa.toUpperCase(), kilometraje_actual, id]
     );
     return result.affectedRows > 0;
   },
@@ -85,7 +85,7 @@ const VehiculoModel = {
   search: async (termino) => {
     const like = `%${termino}%`;
     return db.query(
-      `SELECT v.id_vehiculo, v.marca, v.modelo, v.año, v.placa, v.kilometraje_actual,
+      `SELECT v.id_vehiculo, v.marca, v.modelo, v.anio, v.placa, v.kilometraje_actual,
               c.nombre AS nombre_cliente
        FROM vehiculos v
        INNER JOIN clientes c ON v.id_cliente = c.id_cliente
