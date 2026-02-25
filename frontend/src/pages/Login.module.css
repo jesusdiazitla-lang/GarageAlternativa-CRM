@@ -1,0 +1,229 @@
+.container {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* Panel izquierdo */
+.panel {
+  width: 45%;
+  background: linear-gradient(135deg, #2563EB 0%, #1D4ED8 50%, #1E40AF 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 48px;
+  position: relative;
+  overflow: hidden;
+}
+
+.panel::before {
+  content: '';
+  position: absolute;
+  width: 400px;
+  height: 400px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.05);
+  top: -100px;
+  right: -100px;
+}
+
+.panel::after {
+  content: '';
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.05);
+  bottom: -80px;
+  left: -80px;
+}
+
+.panelContent {
+  color: white;
+  text-align: center;
+  z-index: 1;
+  animation: fadeIn 0.6s ease both;
+}
+
+.carIcon {
+  font-size: 64px;
+  margin-bottom: 24px;
+  display: block;
+  filter: drop-shadow(0 8px 16px rgba(0,0,0,0.2));
+}
+
+.brand {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 16px;
+  letter-spacing: -0.5px;
+}
+
+.brandDesc {
+  font-size: 0.95rem;
+  opacity: 0.85;
+  line-height: 1.7;
+  max-width: 320px;
+  margin: 0 auto 40px;
+}
+
+.stats {
+  display: flex;
+  gap: 32px;
+  justify-content: center;
+}
+
+.stat span {
+  display: block;
+  font-size: 1.8rem;
+  font-weight: 700;
+}
+
+.stat p {
+  font-size: 0.8rem;
+  opacity: 0.75;
+  margin-top: 2px;
+}
+
+/* Panel derecho */
+.formPanel {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 48px;
+  background: #F8FAFC;
+}
+
+.formCard {
+  width: 100%;
+  max-width: 420px;
+  background: white;
+  border-radius: 20px;
+  padding: 48px 40px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+  animation: fadeIn 0.4s ease both;
+}
+
+.formHeader {
+  margin-bottom: 36px;
+}
+
+.formHeader h2 {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #0F172A;
+  margin-bottom: 8px;
+  letter-spacing: -0.5px;
+}
+
+.formHeader p {
+  color: #64748B;
+  font-size: 0.9rem;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.field label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #334155;
+  margin-bottom: 8px;
+}
+
+.inputWrap {
+  position: relative;
+}
+
+.inputIcon {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 0.95rem;
+}
+
+.inputWrap input {
+  width: 100%;
+  padding: 12px 14px 12px 42px;
+  border: 1.5px solid #E2E8F0;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  color: #1E293B;
+  background: #F8FAFC;
+  transition: all 0.2s;
+  outline: none;
+}
+
+.inputWrap input:focus {
+  border-color: #2563EB;
+  background: white;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.error {
+  background: #FEF2F2;
+  border: 1px solid #FECACA;
+  color: #DC2626;
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+}
+
+.btn {
+  width: 100%;
+  padding: 13px;
+  background: #2563EB;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.btn:hover:not(:disabled) {
+  background: #1D4ED8;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35);
+}
+
+.btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.spinner {
+  width: 18px;
+  height: 18px;
+  border: 2px solid rgba(255,255,255,0.3);
+  border-top-color: white;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@media (max-width: 768px) {
+  .container { flex-direction: column; }
+  .panel { width: 100%; padding: 40px 24px; min-height: 240px; }
+  .stats { gap: 20px; }
+  .formPanel { padding: 24px; }
+  .formCard { padding: 32px 24px; }
+}

@@ -27,7 +27,7 @@ const ClienteModel = {
     if (!cliente) return null;
 
     const vehiculos = await db.query(
-      `SELECT id_vehiculo, marca, modelo, año, placa, kilometraje_actual, activo
+      `SELECT id_vehiculo, marca, modelo, anio, placa, kilometraje_actual, activo
        FROM vehiculos
        WHERE id_cliente = ? AND activo = TRUE`,
       [id]
